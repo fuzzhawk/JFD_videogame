@@ -4,6 +4,7 @@
 // so the game can compute the payout.
 
 import { sfx } from './audio.js';
+import { randomWords } from './words.js';
 
 export class RapGame {
   constructor(opts, onComplete) {
@@ -11,6 +12,9 @@ export class RapGame {
     this.title = opts.title || 'Drop a verse!';
     this.rapBoost = opts.rapBoost || false;
     this.onComplete = onComplete;
+    // A random word to spit on each beat (paste your own in the editor).
+    this.words = randomWords(this.rounds);
+    this.spat = null; // last successfully spat word (for the flash)
 
     this.round = 0;
     this.cursor = 0;
@@ -39,6 +43,7 @@ export class RapGame {
       const quality = 1 - dist / hw;
       const perfect = dist < 0.05;
       this.results.push(quality);
+      this.spat = this.words[this.round] || '';
       if (perfect) sfx.perfect();
       else sfx.rapHit(this.round);
       this.flash = 0.25; this.flashGood = true;
@@ -107,9 +112,15 @@ export class RapGame {
       ctx.font = 'bold 30px system-ui, sans-serif';
       ctx.fillText('Get ready…', w / 2, by - 20);
     } else {
-      ctx.fillStyle = '#eee';
-      ctx.font = '16px system-ui, sans-serif';
-      ctx.fillText('TAP in the yellow zone to the beat!', w / 2, by - 24);
+      // The word to spit on this beat.
+      const word = this.words[this.round] || '';
+      const good = this.flash > 0 && this.flashGood;
+      ctx.fillStyle = good ? '#4caf50' : '#fff';
+      ctx.font = 'bold ' + (good ? 40 : 34) + 'px system-ui, sans-serif';
+      ctx.fillText('“' + word + '”', w / 2, by - 30);
+      ctx.fillStyle = '#bbb';
+      ctx.font = '14px system-ui, sans-serif';
+      ctx.fillText('TAP in the yellow zone to spit it!', w / 2, by - 4);
     }
 
     // Track.

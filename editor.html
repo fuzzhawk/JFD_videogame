@@ -69,6 +69,20 @@
       <div id="item-slots" class="slot-grid"></div>
       <button id="btn-reset-all" class="mini-btn danger">Reset all to placeholders</button>
     </section>
+
+    <!-- Rap lyrics / words -->
+    <section class="card">
+      <h2>Rap Words &amp; Lyrics</h2>
+      <p class="muted">During the rap minigame, a random word is shown to spit on each beat.
+        Paste your own lyrics or word list below (one per line, or comma-separated).
+        Saved to this browser and used by the game.</p>
+      <textarea id="rap-words" class="lyrics" rows="8" placeholder="Dawson&#10;hot dog&#10;hustle&#10;mustard&#10;flow"></textarea>
+      <div class="btn-row">
+        <button id="btn-save-words" class="mini-btn">💾 Save words</button>
+        <button id="btn-reset-words" class="mini-btn danger">Reset to defaults</button>
+        <span id="words-status" class="tiny muted"></span>
+      </div>
+    </section>
   </main>
 
   <input id="file-input" type="file" accept="image/png,image/*" class="hidden" />

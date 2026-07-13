@@ -1,10 +1,16 @@
 # 🎤 John from Dawson: Rap Game 🌭
 
-A mobile-friendly, top-down exploration game about **John from Dawson**, a
-small-town rapper trying to make it in the big world. Roam a procedurally
-generated world, collect **money** and **hot dogs**, **sell hot dogs** to hungry
-folks, **rap for the crowd** to stack fame, and climb the **leaderboard** before
-the day runs out.
+A mobile-friendly, **side-scrolling beat-em-up** (Streets of Rage / River City
+Ransom style) about **John from Dawson**, a small-town rapper making it in the
+big world. Brawl your way left-to-right: **punch** and **jump** past thugs,
+collect **money** and **hot dogs**, **sell hot dogs** to hungry folks, and **rap
+for the crowd** to stack fame — then climb the **leaderboard** before the day
+runs out.
+
+The world is built from alternating **segments**: **towns** *pinch* the walkable
+band into a tight brawl corridor with a city backdrop; push through and the world
+**opens up** into wide green stretches with blob-shaped forests, more pickups, and
+roaming enemies.
 
 Built with **vanilla JavaScript + HTML5 Canvas** — no build step, no framework,
 works on desktop and touch devices.
@@ -26,17 +32,23 @@ npm start          # then open http://localhost:8080/
 
 | | Desktop | Touch |
 |---|---|---|
-| **Move** | WASD / arrow keys | drag the **left** side of the screen (virtual joystick) |
-| **Action** | Space / E / Enter | the pink **●** button, or tap the **right** side |
+| **Move** | WASD / arrows (up-down changes lane) | drag the **left** side of the screen (virtual joystick) |
+| **Attack** | J / F / Enter | the pink **HIT** button |
+| **Jump** | Space / K | the blue **JUMP** button |
 
+- **Punch** thugs and brutes — brutes are bigger, tougher, and hit harder. Watch
+  for the red **!** telegraph before they swing. Knock them out for cash + fame.
 - **Pickups** are everywhere — coins, cash, hot dogs & ingredients (all add hot
   dogs), plus **buffs** (soda/coffee = speed, mic/boombox = better rap payouts)
   and **style** items (chains, diamonds, records… = instant fame).
-- Walk up to a **Hungry Customer** and hit Action to **sell a hot dog** for cash.
-- Walk up to a **Fan**, **Rival**, or **Producer** to start a **rap minigame** —
-  tap in time with the beat. Better timing = more money + fame.
-- Each run is a timed "day". When time's up your **score** (money earned + fame)
-  is submitted to the leaderboard.
+- Walk up to a **Hungry Customer** (no enemies nearby) and press Attack to **sell
+  a hot dog** for cash.
+- Walk up to a **Fan** or **Producer** to start a **rap minigame** — a random word
+  is shown to spit on each beat; tap in the yellow zone in time. Better timing =
+  more money + fame. Paste your own lyrics in the editor.
+- Keep your **health** up — get knocked out and the run ends early.
+- Each run is a timed "day". When time's up (or you're KO'd) your **score** (money
+  earned + fame + knockouts) is submitted to the leaderboard.
 
 ## 🎨 Sprites & animation
 
@@ -57,6 +69,9 @@ today. Real PNG art can be dropped in later without touching game code.
 - **Sprite Slots** — upload a PNG to replace any head or pickup icon. Uploads are
   saved to `localStorage` and are used by the game immediately (same browser).
   Each slot has **Reset** to restore its placeholder.
+- **Rap Words & Lyrics** — paste your own words/lyrics (one per line or
+  comma-separated); they become the random words shown during the rap minigame.
+  Saved to `localStorage`; **Reset** restores the default bank.
 
 Sprite slot names the game looks for: `head_john`, `head_customer`, `head_fan`,
 `head_rival`, `head_producer`, and `item_*` for every pickup (see `src/items.js`).
@@ -85,16 +100,17 @@ styles.css          Shared styles     editor.css  Editor-only styles
 serve.mjs           Zero-dependency dev server
 src/
   main.js           Game bootstrap: title/HUD/game-over wiring
-  game.js           Engine: world render, spawning, collision, interactions
-  world.js          Procedural terrain + towns (roads/buildings)
+  game.js           Engine: side-scroll render, spawning, combat, interactions
+  world.js          Segmented world: pinched towns + open forest stretches
   rng.js            Seeded hashing + value/fractal noise
   spritegen.js      Procedural SNES-style body walk-cycle generator
-  character.js      Body + head compositing and walk animation
+  character.js      Body + head compositing and walk animation (side/4-dir)
   sprites.js        Sprite registry (placeholders + uploaded PNG overrides)
   items.js          Pickup definitions + placeholder icons
-  entities.js       Player, NPC, Pickup
-  input.js          Keyboard + touch joystick/action
-  rap.js            Rap rhythm minigame
+  entities.js       Player (jump/combat), Enemy AI, friendly NPC, Pickup
+  input.js          Keyboard + touch joystick + attack/jump buttons
+  rap.js            Rap rhythm minigame (random words)
+  words.js          Rap word bank (default + editor-pasted, backend-free)
   audio.js          Web Audio SFX
   leaderboard.js    Dummy session leaderboard (backend-ready interface)
   editor.js         Editor logic

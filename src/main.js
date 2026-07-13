@@ -14,7 +14,7 @@ const dom = {
   score: $('stat-score'),
   timer: $('stat-timer'),
   buffs: $('buffs'),
-  action: $('btn-action-label'),
+  health: $('health-fill'),
   onGameOver: showGameOver,
 };
 
@@ -43,9 +43,9 @@ function hashString(s) {
   return h >>> 0;
 }
 
-// --- Action & mute buttons ---
-const actionBtn = $('btn-action');
-actionBtn.addEventListener('pointerdown', (e) => { e.preventDefault(); game.triggerAction(); });
+// --- Attack / jump / mute buttons ---
+$('btn-attack').addEventListener('pointerdown', (e) => { e.preventDefault(); game.input.triggerAttack(); });
+$('btn-jump').addEventListener('pointerdown', (e) => { e.preventDefault(); game.input.triggerJump(); });
 
 $('btn-mute').addEventListener('click', () => {
   const muted = game.toggleMute();
@@ -53,13 +53,17 @@ $('btn-mute').addEventListener('click', () => {
 });
 
 $('btn-quit').addEventListener('click', () => {
-  if (game.state === 'playing') game._endRun();
+  if (game.state === 'playing') game._endRun('time');
 });
 
 // --- Game over / leaderboard ---
-async function showGameOver(score) {
+async function showGameOver(score, reason) {
   $('hud').classList.add('hidden');
   $('final-score').textContent = score;
+  $('go-title').textContent = reason === 'ko' ? 'Knocked Out!' : "Day's Done!";
+  $('go-reason').textContent = reason === 'ko'
+    ? 'The streets got the better of you this time.'
+    : 'Time to count the day\'s takings.';
   $('go-screen').classList.remove('hidden');
   await renderLeaderboard();
   $('submit-row').classList.remove('hidden');

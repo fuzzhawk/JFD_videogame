@@ -63,7 +63,12 @@ html, body {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
+.healthbar { display: flex; align-items: center; gap: 5px; background: #0009; border-radius: 10px; padding: 5px 9px; }
+.hp-ico { font-size: 13px; }
+.hp-track { width: 110px; height: 10px; background: #ffffff22; border-radius: 5px; overflow: hidden; }
+#health-fill { width: 100%; height: 100%; border-radius: 5px; background: linear-gradient(90deg, #e53935, #ff7043); transition: width 0.12s linear; }
 #buffs { display: flex; gap: 6px; }
 .buff {
   background: #0009; border-radius: 8px; padding: 4px 8px;
@@ -90,25 +95,34 @@ html, body {
   cursor: pointer;
 }
 
-#btn-action {
+#action-buttons {
   position: absolute;
-  right: max(24px, env(safe-area-inset-right));
-  bottom: max(28px, env(safe-area-inset-bottom));
-  width: 96px; height: 96px;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  pointer-events: auto;
+}
+.act-btn {
   border-radius: 50%;
   border: 3px solid #ffffff55;
-  background: radial-gradient(circle at 35% 30%, #ff6ec7, #b0287d);
   color: #fff;
-  font-size: 16px;
   font-weight: 800;
   cursor: pointer;
-  pointer-events: auto;
   box-shadow: 0 4px 14px #0007;
   display: flex; align-items: center; justify-content: center;
-  text-align: center;
-  line-height: 1.05;
+  line-height: 1;
 }
-#btn-action:active { transform: scale(0.94); }
+.act-btn:active { transform: scale(0.92); }
+.act-btn.attack {
+  width: 92px; height: 92px; font-size: 20px;
+  background: radial-gradient(circle at 35% 30%, #ff6ec7, #b0287d);
+}
+.act-btn.jump {
+  width: 68px; height: 68px; font-size: 15px;
+  background: radial-gradient(circle at 35% 30%, #4fc3f7, #1976d2);
+}
 
 /* ---------- Overlays ---------- */
 .overlay {
@@ -145,6 +159,7 @@ h1 {
 .blurb { font-size: 14px; line-height: 1.5; opacity: 0.9; }
 h2 { margin: 0 0 6px; font-size: 26px; }
 .final { font-size: 20px; margin: 0 0 12px; color: var(--accent); font-weight: 800; }
+.go-reason { font-size: 13px; opacity: 0.75; margin: 0 0 10px; }
 
 .field { text-align: left; margin: 14px 0 8px; }
 .field label { font-size: 12px; opacity: 0.75; display: block; margin-bottom: 4px; }

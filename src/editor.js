@@ -10,6 +10,7 @@ import { ITEMS } from './items.js';
 import { generateBodySheet } from './spritegen.js';
 import { Character, dirFromVec } from './character.js';
 import { OUTFITS } from './entities.js';
+import { getWordsText, setWords, resetWords, isCustomWords, DEFAULT_WORDS } from './words.js';
 
 initSprites();
 
@@ -238,4 +239,26 @@ $('btn-reset-all').addEventListener('click', () => {
   Object.keys(ITEMS).forEach((k) => resetItemPlaceholder(ITEMS[k].sprite));
   allSlots.forEach((s) => s._refresh && s._refresh());
   syncCharColors();
+});
+
+// ---- Rap words / lyrics -----------------------------------------------------
+const wordsArea = $('rap-words');
+const wordsStatus = $('words-status');
+function refreshWordsStatus() {
+  const custom = isCustomWords();
+  wordsStatus.textContent = custom ? 'Using your custom words.' : `Using ${DEFAULT_WORDS.length} default words.`;
+}
+wordsArea.value = getWordsText();
+refreshWordsStatus();
+
+$('btn-save-words').addEventListener('click', () => {
+  const arr = setWords(wordsArea.value);
+  wordsArea.value = arr.join('\n');
+  refreshWordsStatus();
+  wordsStatus.textContent = `Saved ${arr.length} words. ` + wordsStatus.textContent;
+});
+$('btn-reset-words').addEventListener('click', () => {
+  const arr = resetWords();
+  wordsArea.value = arr.join('\n');
+  refreshWordsStatus();
 });

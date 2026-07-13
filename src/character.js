@@ -25,15 +25,26 @@ export function dirFromVec(vx, vy) {
 }
 
 export class Character {
-  constructor(colors, headName) {
+  // mode: 'dir' = full 4-direction (top-down); 'side' = left/right only for the
+  // side-scrolling beat-em-up (vertical band movement keeps horizontal facing).
+  constructor(colors, headName, mode = 'dir') {
     this.colors = colors;
     this.headName = headName;
-    this.facing = 'down';
+    this.mode = mode;
+    this.facing = mode === 'side' ? 'right' : 'down';
     this.walkTimer = 0;
     this.moving = false;
   }
 
   update(dt, vx, vy) {
+    if (this.mode === 'side') {
+      this.moving = Math.abs(vx) > 0.01 || Math.abs(vy) > 0.01;
+      if (vx < -0.01) this.facing = 'left';
+      else if (vx > 0.01) this.facing = 'right';
+      if (this.moving) this.walkTimer += dt * (6 + Math.min(6, Math.hypot(vx, vy) * 3));
+      else this.walkTimer = 0;
+      return;
+    }
     const d = dirFromVec(vx, vy);
     this.moving = d !== null;
     if (d) this.facing = d;
