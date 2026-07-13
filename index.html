@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#101018" />
+  <title>John from Dawson: Rap Game</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%F0%9F%8E%A4%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div id="hud-top">
+      <div class="stat"><span class="ico">💵</span><span id="stat-money">$0</span></div>
+      <div class="stat"><span class="ico">🌭</span><span id="stat-hotdogs">0</span></div>
+      <div class="stat"><span class="ico">🔥</span><span id="stat-fame">0</span></div>
+      <div class="stat time"><span class="ico">⏱️</span><span id="stat-timer">3:00</span></div>
+    </div>
+    <div id="hud-sub">
+      <div class="healthbar"><span class="hp-ico">❤️</span><div class="hp-track"><div id="health-fill"></div></div></div>
+      <div class="stat small">Score <span id="stat-score">0</span></div>
+      <div id="buffs"></div>
+    </div>
+    <div id="hud-right">
+      <button id="btn-mute" class="round-btn" aria-label="Mute">🔊</button>
+      <button id="btn-quit" class="round-btn" aria-label="End day" title="End day">🏁</button>
+    </div>
+    <div id="action-buttons">
+      <button id="btn-jump" class="act-btn jump" aria-label="Jump">JUMP</button>
+      <button id="btn-attack" class="act-btn attack" aria-label="Attack">HIT</button>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div id="title-screen" class="overlay">
+    <div class="panel">
+      <h1>John from Dawson</h1>
+      <p class="tag">🎤 The Rap Game 🌭</p>
+      <p class="blurb">Small-town rapper, big-world dreams. Brawl your way right through
+        town — <b>punch</b> and <b>jump</b> past thugs — grab <b>cash</b> and <b>hot dogs</b>,
+        sell dogs to hungry folks, and <b>rap for the crowd</b> to stack fame. Push through the
+        pinch of each town and the world opens up. Climb the leaderboard before the day runs out.</p>
+      <div class="field">
+        <label for="seed-input">World seed (optional)</label>
+        <input id="seed-input" type="text" placeholder="e.g. dawson" autocomplete="off" />
+      </div>
+      <button id="btn-play" class="big-btn">▶ Play</button>
+      <div class="how">
+        <p><b>Move:</b> WASD / arrows (up-down changes lane), or drag the left side on touch.</p>
+        <p><b>Attack:</b> J / F — walk into a customer or fan and hit to sell / rap.</p>
+        <p><b>Jump:</b> Space / K, or the on-screen buttons.</p>
+      </div>
+      <a class="editor-link" href="editor.html">🎨 Open Sprite &amp; Animation Editor</a>
+    </div>
+  </div>
+
+  <!-- Game over -->
+  <div id="go-screen" class="overlay hidden">
+    <div class="panel">
+      <h2 id="go-title">Day's Done!</h2>
+      <p id="go-reason" class="go-reason"></p>
+      <p class="final">Score: <span id="final-score">0</span></p>
+      <ol id="leaderboard-list" class="leaderboard"></ol>
+      <div id="submit-row">
+        <input id="name-input" type="text" maxlength="16" placeholder="Your name" autocomplete="off" />
+        <button id="btn-submit" class="big-btn">Submit Score</button>
+      </div>
+      <p id="go-thanks" class="hidden">You placed <b>#<span id="go-rank">?</span></b>! 🎉</p>
+      <button id="btn-again" class="big-btn ghost">Play Again</button>
+    </div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

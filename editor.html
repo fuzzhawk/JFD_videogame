@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sprite &amp; Animation Editor — John from Dawson</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%F0%9F%8E%A8%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="editor.css" />
+</head>
+<body class="editor">
+  <header class="ed-header">
+    <a href="index.html" class="back">← Game</a>
+    <h1>🎨 Sprite &amp; Animation Editor</h1>
+    <span class="ed-note">Changes save to this browser and are used by the game.</span>
+  </header>
+
+  <main class="ed-main">
+    <!-- Body animation generator -->
+    <section class="card">
+      <h2>Body Animation Generator</h2>
+      <p class="muted">SNES-style walk cycles are drawn procedurally. Pick colors and a
+        head, preview the animation, then export the body spritesheet.</p>
+      <div class="gen-grid">
+        <div class="preview-wrap">
+          <canvas id="anim-preview" width="360" height="200"></canvas>
+          <div class="preview-controls">
+            <label>Zoom
+              <input id="anim-zoom" type="range" min="2" max="8" value="5" />
+            </label>
+            <label class="chk"><input id="anim-play" type="checkbox" checked /> Walk</label>
+          </div>
+        </div>
+        <div class="controls">
+          <div class="color-row"><label>Skin</label><input id="c-skin" type="color" value="#e0a878" /></div>
+          <div class="color-row"><label>Shirt</label><input id="c-shirt" type="color" value="#d94141" /></div>
+          <div class="color-row"><label>Pants</label><input id="c-pants" type="color" value="#33447a" /></div>
+          <div class="color-row"><label>Shoes</label><input id="c-shoes" type="color" value="#3a2a1a" /></div>
+          <div class="color-row"><label>Head</label>
+            <select id="head-select"></select>
+          </div>
+          <div class="color-row"><label>Preset</label>
+            <select id="preset-select">
+              <option value="">— outfits —</option>
+            </select>
+          </div>
+          <div class="btn-row">
+            <label>Export ×
+              <select id="export-scale">
+                <option>1</option><option selected>4</option><option>8</option>
+              </select>
+            </label>
+            <button id="btn-export-sheet" class="mini-btn">⬇ Spritesheet PNG</button>
+          </div>
+          <p class="tiny muted">Sheet layout: rows = down / left / right / up · columns = 4 walk frames.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sprite uploader / tester -->
+    <section class="card">
+      <h2>Sprite Slots (upload &amp; test PNGs)</h2>
+      <p class="muted">Upload a PNG to replace any placeholder. Heads are composited onto the
+        animated body above; item sprites appear as pickups in the world. Transparent PNGs
+        (ideally square, e.g. 16–64px) work best.</p>
+      <h3>Heads</h3>
+      <div id="head-slots" class="slot-grid"></div>
+      <h3>Pickups &amp; Items</h3>
+      <div id="item-slots" class="slot-grid"></div>
+      <button id="btn-reset-all" class="mini-btn danger">Reset all to placeholders</button>
+    </section>
+
+    <!-- Rap lyrics / words -->
+    <section class="card">
+      <h2>Rap Words &amp; Lyrics</h2>
+      <p class="muted">During the rap minigame, a random word is shown to spit on each beat.
+        Paste your own lyrics or word list below (one per line, or comma-separated).
+        Saved to this browser and used by the game.</p>
+      <textarea id="rap-words" class="lyrics" rows="8" placeholder="Dawson&#10;hot dog&#10;hustle&#10;mustard&#10;flow"></textarea>
+      <div class="btn-row">
+        <button id="btn-save-words" class="mini-btn">💾 Save words</button>
+        <button id="btn-reset-words" class="mini-btn danger">Reset to defaults</button>
+        <span id="words-status" class="tiny muted"></span>
+      </div>
+    </section>
+  </main>
+
+  <input id="file-input" type="file" accept="image/png,image/*" class="hidden" />
+  <script type="module" src="src/editor.js"></script>
+</body>
+</html>

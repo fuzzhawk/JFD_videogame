@@ -1,0 +1,18 @@
+{
+  "name": "jfd_videogame",
+  "version": "0.1.0",
+  "description": "John from Dawson: Rap Game — a mobile-friendly side-scrolling beat-em-up (vanilla JS, no build step).",
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs",
+    "dev": "node serve.mjs"
+  },
+  "keywords": [
+    "game",
+    "canvas",
+    "mobile",
+    "beat-em-up",
+    "procedural"
+  ],
+  "license": "MIT"
+}
