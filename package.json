@@ -1,0 +1,12 @@
+{
+  "name": "jfd_videogame",
+  "version": "0.1.0",
+  "description": "John from Dawson: Rap Game — a mobile-friendly top-down rapper game (vanilla JS, no build step).",
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs",
+    "dev": "node serve.mjs"
+  },
+  "keywords": ["game", "canvas", "mobile", "rpg", "procedural"],
+  "license": "MIT"
+}
